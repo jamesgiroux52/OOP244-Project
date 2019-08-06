@@ -8,11 +8,11 @@
  ============================================================================
  */
 
-/*
- ============================================================================
- Description : Date header
- ============================================================================
- */
+ /*
+  ============================================================================
+  Description : Date header
+  ============================================================================
+  */
 
 #ifndef AID_DATE_H_
 #define AID_DATE_H_
@@ -46,6 +46,7 @@ namespace aid {
 		// constructors
 		Date();
 		Date(int year, int month, int day);
+
 		// relational operators
 		bool operator==(const Date& rhs) const;
 		bool operator!=(const Date& rhs) const;
@@ -53,9 +54,12 @@ namespace aid {
 		bool operator>(const Date& rhs) const;
 		bool operator<=(const Date& rhs) const;
 		bool operator>=(const Date& rhs) const;
-		// queries and modifiers
+
+		// queries
 		int errCode() const;
 		bool bad() const;
+
+		// I/O functions
 		std::istream& read(std::istream& istr);
 		std::ostream& write(std::ostream& ostr) const;
 	};

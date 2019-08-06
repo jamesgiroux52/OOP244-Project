@@ -23,7 +23,10 @@ namespace aid {
 		int days[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, -1 };
 		int month = mon >= 1 && mon <= 12 ? mon : 13;
 		month--;
-		return days[month] + int((month == 1)*((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0));
+		return days[month]
+				+ int(
+						(month == 1) * ((year % 4 == 0) && (year % 100 != 0))
+								|| (year % 400 == 0));
 	}
 
 	// sets error code
@@ -69,47 +72,49 @@ namespace aid {
 	}
 
 	// comparison operators
-	bool Date::operator==(const Date & rhs) const {
+	bool Date::operator==(const Date& rhs) const {
 		return compare() == rhs.compare() ? true : false;
 	}
 
-	bool Date::operator!=(const Date & rhs) const {
+	bool Date::operator!=(const Date& rhs) const {
 		return compare() != rhs.compare() ? true : false;
 	}
 
-	bool Date::operator<(const Date & rhs) const {
+	bool Date::operator<(const Date& rhs) const {
 		return compare() < rhs.compare() ? true : false;
 	}
 
-	bool Date::operator>(const Date & rhs) const {
+	bool Date::operator>(const Date& rhs) const {
 		return compare() > rhs.compare() ? true : false;
 	}
 
-	bool Date::operator<=(const Date & rhs) const {
+	bool Date::operator<=(const Date& rhs) const {
 		return compare() <= rhs.compare() ? true : false;
 	}
 
-	bool Date::operator>=(const Date & rhs) const{
+	bool Date::operator>=(const Date& rhs) const {
 		return compare() >= rhs.compare() ? true : false;
 	}
 
+	// returns error code as integer
 	int Date::errCode() const {
 		return m_error;
 	}
 
+	// returns true if there is an error
 	bool Date::bad() const {
 		return m_error != NO_ERROR ? true : false;
 	}
 
 	// read function
-	std::istream& Date::read(std::istream & istr) {
+	std::istream& Date::read(std::istream& istr) {
 
 		char symbol;
 
 		istr.clear();
 		istr >> m_year >> symbol >> m_month >> symbol >> m_day;
 
-		if (istr.fail()){
+		if (istr.fail()) {
 			*this = Date();
 			errCode(CIN_FAILED);
 		} else if (min_year > m_year || m_year > max_year) {
@@ -160,15 +165,3 @@ namespace aid {
 		return istr;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -8,11 +8,11 @@
  ============================================================================
  */
 
-/*
- ============================================================================
- Description : Perishable header file
- ============================================================================
- */
+ /*
+  ============================================================================
+  Description : Perishable header file
+  ============================================================================
+  */
 
 #ifndef AID_PERISHABLE_H_
 #define AID_PERISHABLE_H_
@@ -23,17 +23,24 @@
 namespace aid {
 
 	class Perishable : public Good {
+		// expiry date object
 		Date m_expDate;
 	public:
+		// constructor
 		Perishable();
+
+		// file logic
 		std::fstream& store(std::fstream& file, bool newLine = true) const;
 		std::fstream& load(std::fstream& file);
 		std::ostream& write(std::ostream& os, bool linear) const;
 		std::istream& read(std::istream& is);
+
+		//
 		const Date& expiry() const;
 	};
 
-	//iGood* CreateProduct(char tag);
+	// free helper to create a product
+	iGood* CreateProduct(char tag);
 }
 
 #endif /* AID_PERISHABLE_H_ */

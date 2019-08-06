@@ -14,21 +14,24 @@
  ============================================================================
  */
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <cstring>
-
 #include "Perishable.h"
 
 using namespace std;
 
 namespace aid {
 
-	Perishable::Perishable() : Good('P') {
-		m_expDate = Date();
+	// create a perishable good
+	Perishable::Perishable() :
+			Good('P') {
 	}
 
+	// store the expiry date in the file
 	std::fstream& Perishable::store(std::fstream& file, bool newLine) const {
 		Good::store(file, false);
 		Date tmpDate;
@@ -43,74 +46,85 @@ namespace aid {
 		return file;
 	}
 
+	// load the expiry date from the file
 	std::fstream& Perishable::load(std::fstream& file) {
 		Good::load(file);
+		file.ignore();
 		m_expDate.read(file);
 		file.ignore();
 		return file;
 	}
 
+	// display the expiry date
 	std::ostream& Perishable::write(std::ostream& os, bool linear) const {
-		Good::write(os, linear);
-		if (isClear() && !isEmpty()) {
-			if (linear) {
-				m_expDate.write(os);
+		if (m_error.message() != nullptr)
+			os << m_error.message();
 
+		if (!isEmpty() && isClear()) {
+			Good::write(os, linear);
+			if (!linear) {
+				os << endl << " Expiry date: ";
+				m_expDate.write(os);
 			} else {
-				os << '\n' << " Expiry date: ";
 				m_expDate.write(os);
 			}
 		}
+
 		return os;
+
 	}
 
+	// gets the expiry date from user
 	std::istream& Perishable::read(std::istream& is) {
-		Date tmp;
 		Good::read(is);
-		if (isClear()) {
-			std::cout << " Expiry date (YYYY/MM/DD): ";
-			std::cin >> tmp;
-		}
-		if (isClear() && tmp.bad()) {
-			switch (tmp.errCode()) {
-			case CIN_FAILED:
-				message("Invalid Date Entry");
-				break;
-			case YEAR_ERROR:
-				message("Invalid Year in Date Entry");
-				break;
-			case MON_ERROR:
-				message("Invalid Month in Date Entry");
-				break;
-			case DAY_ERROR:
-				message("Invalid Day in Date Entry");
-				break;
-			case PAST_ERROR:
-				message("Invalid Expiry in Date Entry");
-				break;
-			}
-			is.setstate(std::ios::failbit);
-		}
-		if (!is.fail()) {
-			m_expDate = tmp;
-		}
 
+		if (!is.fail()) {
+			std::cout << " Expiry date (YYYY/MM/DD): ";
+			Date temporary;
+			temporary.read(is);
+
+			if (temporary.errCode()) {
+				is.setstate(std::ios::failbit);
+				switch (temporary.errCode()) {
+				case CIN_FAILED:
+					m_error.message("Invalid Date Entry");
+					break;
+				case DAY_ERROR:
+					m_error.message("Invalid Day in Date Entry");
+					break;
+				case MON_ERROR:
+					m_error.message("Invalid Month in Date Entry");
+					break;
+				case YEAR_ERROR:
+					m_error.message("Invalid Year in Date Entry");
+					break;
+				case PAST_ERROR:
+					m_error.message("Invalid Expiry in Date Entry");
+					break;
+				}
+			} else {
+				m_expDate = temporary;
+			}
+		}
 		return is;
 
 	}
 
-	const Date & Perishable::expiry() const {
+	// return the expiry date
+	const Date& Perishable::expiry() const {
 		return m_expDate;
 	}
 
+	// create a product of correct type
 	iGood* CreateProduct(char tag) {
+		iGood* obj = nullptr;
 
-		if (tag == 'N' || tag == 'n'){
-			return new Good();
+		if (tag == 'N' || tag == 'n') {
+			obj = new Good();
 		} else if (tag == 'P' || tag == 'p') {
-			return new Perishable();
+			obj = new Perishable();
 		}
 
-		return nullptr;
+		return obj;
 	}
 }

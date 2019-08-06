@@ -8,11 +8,11 @@
  ============================================================================
  */
 
-/*
- ============================================================================
- Description : Good header file
- ============================================================================
- */
+ /*
+  ============================================================================
+  Description : Good header file
+  ============================================================================
+  */
 
 
 #ifndef AID_GOOD_H_
@@ -28,7 +28,7 @@ namespace aid {
 	const int max_name_length = 75;
 	const double tax_rate = 0.13;
 
-	class Good : public iGood{
+	class Good : public iGood {
 		// private data members
 		char m_typeOfGood;
 		char m_sku[max_sku_length + 1];
@@ -38,19 +38,21 @@ namespace aid {
 		int m_quantityNeeded;
 		double m_price;
 		bool m_taxable;
-		Error m_error;
+
+		void setEmpty(const char type);
+		void copyObj(const Good& src);
 	protected:
 		// Protected member functions:
-		void name(const char*);
+		Error m_error;
+		void name(const char* name);
 		const char* name() const;
 		const char* sku() const;
 		const char* unit() const;
 		bool taxed() const;
 		double itemPrice() const;
 		double itemCost() const;
-		void message(const char*);
+		void message(const char* err);
 		bool isClear() const;
-
 	public:
 		// Public member functions:
 
@@ -58,9 +60,9 @@ namespace aid {
 		Good(const char type = 'N');
 		Good(const char* sku, const char* name, const char* unit, int qty = 0, bool taxed = true, double price = 0, int qtyNeeded = 0);
 		// copy constructor
-		Good(Good&);
+		Good(const Good& src);
 		// copy assignment operator
-		Good& operator=(const Good&);
+		Good& operator=(const Good& src);
 		// destructor
 		~Good();
 
@@ -70,13 +72,15 @@ namespace aid {
 		std::ostream& write(std::ostream& os, bool linear) const;
 		std::istream& read(std::istream& is);
 
-		// Operator overloads and logic
-		bool operator==(const char*) const;
+		// logic
 		double total_cost() const;
 		bool isEmpty() const;
 		int qtyNeeded() const;
 		int quantity() const;
 		void quantity(int);
+
+		// comparison operators
+		bool operator==(const char*) const;
 		bool operator>(const char*) const;
 		bool operator>(const iGood&) const;
 		int operator+=(int);

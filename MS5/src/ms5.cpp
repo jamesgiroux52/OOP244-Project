@@ -1,10 +1,18 @@
-//============================================================================
-// Name        : MS5.cpp
-// Author      : James Giroux
-// Version     :
-// Copyright   : 
-// Description : Hello World in C++, Ansi-style
-//============================================================================
+/*
+ ============================================================================
+ Name        : ms5.cpp
+ Author      : James Giroux - jgiroux1@myseneca.ca
+ Student #   : 129198164
+ Section     : SEE
+ Date        : Aug. 3, 2019
+ ============================================================================
+ */
+
+ /*
+  ============================================================================
+  Description : MS% main program file provided
+  ============================================================================
+  */
 
 #include "iGood.h"
 #include "iGood.h" // intentional
@@ -12,8 +20,8 @@
 void testPerishable();
 void testGood();
 void promptUser(const char* sku, const char* name, const char* unit = "",
-		char Tx = '\0', const char* price = "", const char* qty = "",
-		const char* qtyNd = "", const char* date = "");
+	char Tx = '\0', const char* price = "", const char* qty = "",
+	const char* qtyNd = "", const char* date = "");
 void dumpFile(const char* fname);
 void pause_();
 
@@ -33,7 +41,7 @@ int main() {
 	delete prod;
 
 	cout << "No product: " << (CreateProduct('a') == nullptr ? "true" : "false")
-			<< endl;
+		<< endl;
 
 	testGood();
 	cout << endl;
@@ -54,9 +62,10 @@ void testGood() {
 		cin.clear();
 		cin.ignore(2000, '\n');
 		cout << "\nPassed!" << endl
-				<< " Message should be:  Only (Y)es or (N)o are acceptable"
-				<< endl << " Your Error message: " << *good << endl;
-	} else {
+			<< " Message should be:  Only (Y)es or (N)o are acceptable"
+			<< endl << " Your Error message: " << *good << endl;
+	}
+	else {
 		ok = false;
 		cout << " Taxed validation failed" << endl;
 	}
@@ -69,9 +78,10 @@ void testGood() {
 			cin.clear();
 			cin.ignore(2000, '\n');
 			cout << "\nPassed!" << endl
-					<< " Message should be:  Invalid Price Entry" << endl
-					<< " Your Error message: " << *good << endl;
-		} else {
+				<< " Message should be:  Invalid Price Entry" << endl
+				<< " Your Error message: " << *good << endl;
+		}
+		else {
 			ok = false;
 			cout << " Price validation failed" << endl;
 		}
@@ -85,9 +95,10 @@ void testGood() {
 			cin.clear();
 			cin.ignore(2000, '\n');
 			cout << "\nPassed!" << endl
-					<< " Message should be:  Invalid Quantity Entry" << endl
-					<< " Your Error message: " << *good << endl;
-		} else {
+				<< " Message should be:  Invalid Quantity Entry" << endl
+				<< " Your Error message: " << *good << endl;
+		}
+		else {
 			ok = false;
 			cout << " Quantity validaton failed" << endl;
 		}
@@ -101,9 +112,10 @@ void testGood() {
 			cin.clear();
 			cin.ignore(2000, '\n');
 			cout << "\nPassed!" << endl
-					<< " Message should be:  Invalid Quantity Needed Entry"
-					<< endl << " Your Error message: " << *good << endl;
-		} else {
+				<< " Message should be:  Invalid Quantity Needed Entry"
+				<< endl << " Your Error message: " << *good << endl;
+		}
+		else {
 			ok = false;
 			cout << " Quantity Needed validaton failed" << endl;
 		}
@@ -111,16 +123,16 @@ void testGood() {
 	pause_();
 	if (ok) {
 		cout
-				<< "----Display test, the output of the Program and yours must match:"
-				<< endl;
+			<< "----Display test, the output of the Program and yours must match:"
+			<< endl;
 		promptUser("1234", "box", "kg", 'y', "123.45", "1", "5");
 		cin >> *good;
 		//cin.ignore(1000, '\n');
 		cout << "\n-Compare the output of the Program and your output:" << endl;
 		cout << "--Linear------------" << endl;
 		cout
-				<< " Program: 1234   |box                 | 139.50|   1|kg        |   5|"
-				<< endl;
+			<< " Program: 1234   |box                 | 139.50|   1|kg        |   5|"
+			<< endl;
 		cout << "   Yours: " << *good << endl;
 		cout << "--Form Display------" << endl;
 		cout << "--Program: " << endl;
@@ -136,15 +148,15 @@ void testGood() {
 	pause_();
 	if (ok) {
 		cout
-				<< "----Storage and loading test, the output of the Program and yours must match:"
-				<< endl;
+			<< "----Storage and loading test, the output of the Program and yours must match:"
+			<< endl;
 		iGood* tempGood = CreateProduct('N');
 		good->store(goodsFile);
 		good->store(goodsFile);
 		goodsFile.close();
 		cout << "--Store Good, program: " << endl
-				<< "N,1234,box,kg,1,123.45,1,5" << endl
-				<< "N,1234,box,kg,1,123.45,1,5" << endl;
+			<< "N,1234,box,kg,1,123.45,1,5" << endl
+			<< "N,1234,box,kg,1,123.45,1,5" << endl;
 		cout << "--Store Good, yours: " << endl;
 		dumpFile("good.txt");
 		cout << "--Load Good: " << endl;
@@ -152,8 +164,8 @@ void testGood() {
 		goodsFile.ignore(2);
 		tempGood->load(goodsFile);
 		cout
-				<< " Program: 1234   |box                 | 139.50|   1|kg        |   5|"
-				<< endl;
+			<< " Program: 1234   |box                 | 139.50|   1|kg        |   5|"
+			<< endl;
 		cout << "   Yours: " << *tempGood << endl;
 		goodsFile.clear();
 		goodsFile.close();
@@ -176,9 +188,10 @@ void testPerishable() {
 		if (cin.fail()) {
 			cin.clear();
 			cout << "\nPassed!" << endl
-					<< " Message should be:  Invalid Year in Date Entry" << endl
-					<< " Your Error message: " << *perishable << endl;
-		} else {
+				<< " Message should be:  Invalid Year in Date Entry" << endl
+				<< " Your Error message: " << *perishable << endl;
+		}
+		else {
 			ok = false;
 			cout << " Expiry date validaton failed" << endl;
 		}
@@ -187,17 +200,18 @@ void testPerishable() {
 	pause_();
 	if (ok) {
 		cout
-				<< "----Display test, the output of the Program and yours must match:"
-				<< endl;
+			<< "----Display test, the output of the Program and yours must match:"
+			<< endl;
 		promptUser("1234", "water", "liter", 'n', "1.5", "1", "5",
-				"2018/06/30");
+			"2018/06/30");
 		cin >> *perishable;
 		if (cin.fail()) {
 			cin.clear();
 			cout << "\nPassed!" << endl
-					<< " Message should be:  Invalid Expiry in Date Entry"
-					<< endl << " Your Error message: " << *perishable << endl;
-		} else {
+				<< " Message should be:  Invalid Expiry in Date Entry"
+				<< endl << " Your Error message: " << *perishable << endl;
+		}
+		else {
 			ok = false;
 			cout << " Expiry date validaton failed" << endl;
 		}
@@ -206,17 +220,17 @@ void testPerishable() {
 	pause_();
 	if (ok) {
 		cout
-				<< "----Display test, the output of the Program and yours must match:"
-				<< endl;
+			<< "----Display test, the output of the Program and yours must match:"
+			<< endl;
 		promptUser("1234", "water", "liter", 'n', "1.5", "1", "5",
-				"2018/12/30");
+			"2018/12/30");
 		cin >> *perishable;
 		cin.ignore(2000, '\n');
 		cout << "\n-Compare the output of the Program and your output:" << endl;
 		cout << "--Linear------------" << endl;
 		cout
-				<< " Program: 1234   |water               |   1.50|   1|liter     |   5|2018/12/30"
-				<< endl;
+			<< " Program: 1234   |water               |   1.50|   1|liter     |   5|2018/12/30"
+			<< endl;
 		cout << "   Yours: " << *perishable << endl;
 		cout << "--Form Display------" << endl;
 		cout << "--Program: " << endl;
@@ -234,15 +248,15 @@ void testPerishable() {
 	pause_();
 	if (ok) {
 		cout
-				<< "----Storage and loading test, the output of the Program and yours must match:"
-				<< endl;
+			<< "----Storage and loading test, the output of the Program and yours must match:"
+			<< endl;
 		iGood* tempPerishable = CreateProduct('P');
 		perishable->store(goodsShortFile);
 		perishable->store(goodsShortFile);
 		goodsShortFile.close();
 		cout << "--Store Perishable, program: " << endl
-				<< "P,1234,water,liter,0,1.5,1,5,2018/12/30" << endl
-				<< "P,1234,water,liter,0,1.5,1,5,2018/12/30" << endl;
+			<< "P,1234,water,liter,0,1.5,1,5,2018/12/30" << endl
+			<< "P,1234,water,liter,0,1.5,1,5,2018/12/30" << endl;
 		cout << "--Store Perishable, yours: " << endl;
 		dumpFile("goodsShortFile.txt");
 		cout << "--Load Perishable: " << endl;
@@ -250,8 +264,8 @@ void testPerishable() {
 		goodsShortFile.ignore(2);
 		tempPerishable->load(goodsShortFile);
 		cout
-				<< " Program: 1234   |water               |   1.50|   1|liter     |   5|2018/12/30"
-				<< endl;
+			<< " Program: 1234   |water               |   1.50|   1|liter     |   5|2018/12/30"
+			<< endl;
 		cout << "   Yours: " << *tempPerishable << endl;
 		goodsShortFile.clear();
 		goodsShortFile.close();
@@ -263,11 +277,11 @@ void testPerishable() {
 // promptUser prompts user with data to be entered
 //
 void promptUser(const char* sku, const char* name, const char* unit, char Tx,
-		const char* price, const char* qty, const char* qtyNd,
-		const char* date) {
+	const char* price, const char* qty, const char* qtyNd,
+	const char* date) {
 	cout << "Enter the following: " << endl << " Sku: " << sku << endl
-			<< " Name (no spaces): " << name << endl << " Unit: " << unit
-			<< endl;
+		<< " Name (no spaces): " << name << endl << " Unit: " << unit
+		<< endl;
 	if (Tx)
 		cout << " Taxed? (y/n): " << Tx << endl;
 	if (price[0])

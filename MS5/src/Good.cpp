@@ -157,7 +157,6 @@ namespace aid {
 
 		m_taxable = obj.m_taxable;
 		m_typeOfGood = obj.m_typeOfGood;
-
 	}
 
 	// Copy Constructor
